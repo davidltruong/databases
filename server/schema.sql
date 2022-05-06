@@ -1,25 +1,23 @@
+DROP DATABASE IF EXISTS chat;
+
 CREATE DATABASE chat;
 
 USE chat;
 
+DROP TABLE IF EXISTS messages;
 CREATE TABLE messages (
   /* Describe your table here.*/
-  ID int,
-  User text,
-  Message text,
-  Room text
+  id int(11),
+  user_id int(11),
+  message varchar(255),
+  roomname varchar(255)
 );
 
 /* Create other tables and define schemas for them here! */
-
+DROP TABLE IF EXISTS users;
 CREATE TABLE users (
-  User text,
-  ArrayOfMessages text
-);
-
-CREATE TABLE rooms (
-  Room text,
-  ArrayOfMessage text
+  id int(11),
+  user varchar(255)
 );
 
 
