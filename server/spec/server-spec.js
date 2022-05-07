@@ -86,4 +86,53 @@ describe('Persistent Node Chat Server', function() {
       });
     });
   });
+
+  it('Should output new message from the DB', function(done) {
+
+    dbConnection.query('INSERT INTO messages VALUES (?, ?, ?, ?)', [1, 1, 'Men like you can never change!', 'main'], function(err) {
+      if (err) { throw err; }
+    });
+
+    var queryString = 'INSERT INTO messages VALUES (?, ?, ?, ?)';
+    var queryArgs = [2, 1, 'My name is Valjean', 'main'];
+
+    dbConnection.query(queryString, queryArgs, function(err) {
+      if (err) { throw err; }
+
+      request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
+        var messageLog = JSON.parse(body);
+        expect(messageLog[1].message).to.equal('My name is Valjean');
+        expect(messageLog[1].roomname).to.equal('main');
+        done();
+      });
+    });
+  });
+
+  it('Should retain all users in the DB', function(done) {
+
+    request({
+      method: 'POST',
+      uri: 'http://127.0.0.1:3000/classes/users',
+      json: { username: 'Valjean' }
+    }, function () {
+
+      request({
+        method: 'POST',
+        uri: 'http://127.0.0.1:3000/classes/users',
+        json: {username: 'Tester'}
+      }, function () {
+
+        var queryString = 'SELECT * FROM users';
+        var queryArgs = [];
+
+        dbConnection.query(queryString, queryArgs, function(err, results) {
+
+          expect(results.length).to.equal(2);
+          expect(results[1].user).to.equal('Tester');
+
+          done();
+        });
+      });
+    });
+  });
 });

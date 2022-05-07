@@ -5,7 +5,7 @@ module.exports = {
     get: function (req, res) {
       models.messages.get((err, response) => {
         if (err) {
-          throw error;
+          throw err;
         } else {
           res.send(JSON.stringify(response));
         }
@@ -15,7 +15,7 @@ module.exports = {
       var msg = req.body;
       models.messages.post(msg, (err, response) => {
         if (err) {
-          throw error;
+          throw err;
         } else {
           res.send('message posted!');
         }
@@ -30,17 +30,19 @@ module.exports = {
     get: function (req, res) {
       models.users.get((err, response) => {
         if (err) {
-          throw error;
+          throw err;
         } else {
           res.send(JSON.stringify(response));
         }
       });
     },
     post: function (req, res) {
+      console.log(req);
       var msg = req.body;
+      console.log(msg);
       models.users.post(msg, (err, response) => {
         if (err) {
-          throw error;
+          throw err;
         } else {
           res.send('user posted!');
         }
