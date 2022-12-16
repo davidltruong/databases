@@ -17,14 +17,13 @@ This project uses [node](http://nodejs.org) and [npm](https://npmjs.com).
 
 ```sh
 1. $ npm install --global
-2. $ npm start
+2. Configure server/db/index.js mongoDB connection
+3. $ npm start
 ```
 
 ## Usage
 
 This project is to showcase the use of databases, specifically mySQL. The legacy front end messenger app will pull chat history as well as save new chat messages into my mySQL database. The database includes chat rooms with multiple users.
-
-![alt text](https://github.com/davidltruong/subclass-dance-party/blob/master/screenshot.png?raw=true)
 
 ## Maintainers
 
